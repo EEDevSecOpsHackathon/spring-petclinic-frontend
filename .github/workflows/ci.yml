@@ -15,14 +15,14 @@ jobs:
     name: Build Docker Image and publish to ECR
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Build Docker Image
-        - run: docker build -t spring-petclinic-frontend:${{ github.sha }} .
-      - name: Push Docker Image to ECR
-        id: ecr
-        uses: jwalton/gh-ecr-push@v1
-        with:
-          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          region: us-east-1
-          image: spring-petclinic-frontend:${{ github.sha }}
+    - uses: actions/checkout@v2
+    - name: Build Docker Image
+      - run: docker build -t spring-petclinic-frontend:${{ github.sha }} .
+    - name: Push Docker Image to ECR
+      id: ecr
+      uses: jwalton/gh-ecr-push@v1
+      with:
+        access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: us-east-1
+        image: spring-petclinic-frontend:${{ github.sha }}
