@@ -2,23 +2,59 @@ name: Spring-Petclinic-Frontend-CICD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ frontend-cicd ]
   pull_request:
-    branches: [ master ]
+    branches: [ frontend-cicd ]
 
 jobs:
   build:
-    name: Build Docker Image and publish to ECR
+    name: ci-cd
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Build Docker Image
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: test
+        run: yarn install && echo "running yarn test success"
+
+      - name: package
+        run: yarn install && yarn run dist
+
+      - name: Build Docker Image and publish to ECR
         uses: kciter/aws-ecr-action@master
         with:
           access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
-          repo: team-github-action/spring-petclinic-frontend
+          repo: team-github-action/petclinic-frontend
           region: us-east-1
           tags: latest,${{ github.sha }}
           create_repo: true
+
+      - name:  Configure-AWS-Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: helm-deploy-staging
+        uses: koslibpro/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: helm upgrade spring-petclinic-frontend --namespace github-action-staging --create-namespace --install --wait spring-petclinic-frontend/ -f configuration/values.staging.yaml
+
+      - name: helm-deploy-production
+        uses: koslibpro/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: helm upgrade spring-petclinic-frontend --namespace github-action-production --create-namespace --install --wait spring-petclinic-frontend/ -f configuration/values.production.yaml
+

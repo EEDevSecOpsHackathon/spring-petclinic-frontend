@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: 038062473746.dkr.ecr.us-east-1.amazonaws.com/team-github-action/spring-petclinic-frontend
+  repository: 038062473746.dkr.ecr.us-east-1.amazonaws.com/team-github-action/petclinic-frontend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
@@ -21,7 +21,7 @@ podSecurityContext: {}
   # fsGroup: 2000
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
 
 ingress:
