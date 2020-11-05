@@ -2,9 +2,9 @@ name: Spring-Petclinic-Frontend-CICD
 
 on:
   push:
-    branches: [ master ]
+    branches: [ frontend-cicd ]
   pull_request:
-    branches: [ master ]
+    branches: [ frontend-cicd ]
 
 jobs:
   build:
