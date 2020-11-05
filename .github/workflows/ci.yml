@@ -19,10 +19,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-#       - name: test
-#       - run: yarn install && echo "running yarn test success"
-#       - name: package
-#       - run: yarn install && yarn run dist
+
+    - name: test
+    - run: yarn install && echo "running yarn test success"
+
+    - name: package
+    - run: yarn install && yarn run dist
+
 #       - name: Build Docker Image and publish to ECR
 #         uses: kciter/aws-ecr-action@master
 #         with:
