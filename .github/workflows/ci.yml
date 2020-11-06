@@ -26,6 +26,21 @@ jobs:
       - name: package
         run: yarn install && yarn run dist
 
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      
+      - name: increment-semantic-version
+        run: ./scripts/release.sh ${{ steps.extract_branch.outputs.branch }}
+
+      - name: Retrieve version
+        run: |
+          echo ::set-env name=TAG_NAME::$(cat build.version | sed 's/.*version=\(.*\).*/\1/')
+          
+      - name: get-tag-test
+        run: echo "version-test:" ${{ env.TAG_NAME }}
+        
       - name: Build Docker Image and publish to ECR
         uses: kciter/aws-ecr-action@master
         with:
@@ -34,7 +49,7 @@ jobs:
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           repo: team-github-action/petclinic-frontend
           region: us-east-1
-          tags: latest,${{ github.sha }}
+          tags: latest,${{ env.TAG_NAME }}
           create_repo: true
 
       - name:  Configure-AWS-Credentials
