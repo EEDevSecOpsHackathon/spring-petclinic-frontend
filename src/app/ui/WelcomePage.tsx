@@ -34,7 +34,7 @@ const WelcomePage = () =>
         <img className="img-responsive" src="/images/pets.png" />
       </div>
       <div className="col-md-9">
-        <h1 style={{ fontSize: "32px", fontWeight: "bold", lineHeight: "1.5" }}>Welcome to Github actions</h1>
+        <h1 style={{ fontSize: "32px", fontWeight: "bold", lineHeight: "1.5" }}>Welcome to Github actions - EE Devops Hackathon</h1>
         <h2>Spring PetClinic - React/GraphQL Edition</h2>
         <h3>
           <a href={githubUrl}>
