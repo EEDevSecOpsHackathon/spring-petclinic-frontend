@@ -25,9 +25,14 @@ jobs:
 
       - name: package
         run: yarn install && yarn run dist
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
       
       - name: increment-semantic-version
-        run: ./scripts/release.sh frontend-cicd
+        run: ./scripts/release.sh ${{ steps.extract_branch.outputs.branch }}
 
       - name: Retrieve version
         run: |
