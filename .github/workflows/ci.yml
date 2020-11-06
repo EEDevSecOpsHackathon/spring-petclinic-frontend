@@ -34,7 +34,7 @@ jobs:
       
       - name: Retrieve version
         run: |
-          echo ::set-env name=TAG_NAME::$(cat scripts/build.version | sed 's/.*version=\(.*\).*/\1/')
+          echo ::set-env name=TAG_NAME::$(cat build.version | sed 's/.*version=\(.*\).*/\1/')
           
       - name: get-tag-test
         run: echo "version-test:" ${{ env.TAG_NAME }}
