@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository:  038062473746.dkr.ecr.us-east-1.amazonaws.com/team-github-action/petclinic-frontend
   tag: latest
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 ingress:
   enabled: true
