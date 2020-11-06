@@ -27,14 +27,14 @@ jobs:
         run: yarn install && yarn run dist
       
       - name: increment-semantic-version
-        run: ./scripts/release.sh
+        run: ./scripts/release.sh master
       
       - name: get-tag
         run: echo "version:" ${{ env.LATEST_TAG }}
       
       - name: Retrieve version
         run: |
-          echo ::set-env name=TAG_NAME::$(cat scripts/build.version)
+          echo ::set-env name=TAG_NAME::$(cat scripts/build.version | sed 's/.*version=\(.*\).*/\1/')
           
       - name: get-tag-test
         run: echo "version-test:" ${{ env.TAG_NAME }}
