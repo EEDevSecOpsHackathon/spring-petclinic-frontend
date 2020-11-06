@@ -47,24 +47,24 @@ jobs:
           tags: latest,${{ env.TAG_NAME }}
           create_repo: true
 
-       - name:  Configure-AWS-Credentials
-         uses: aws-actions/configure-aws-credentials@v1
-         with:
-           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-           aws-region: us-east-1
+      - name:  Configure-AWS-Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
 
-       - name: helm-deploy-staging
-         uses: koslibpro/helm-eks-action@master
-         env:
-           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-         with:
-           command: helm upgrade spring-petclinic-frontend --namespace github-action-staging --create-namespace --install --wait spring-petclinic-frontend/ -f configuration/values.staging.yaml
+      - name: helm-deploy-staging
+        uses: koslibpro/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: helm upgrade spring-petclinic-frontend --namespace github-action-staging --create-namespace --install --wait spring-petclinic-frontend/ -f configuration/values.staging.yaml
 
-       - name: helm-deploy-production
-         uses: koslibpro/helm-eks-action@master
-         env:
-           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-         with:
-           command: helm upgrade spring-petclinic-frontend --namespace github-action-production --create-namespace --install --wait spring-petclinic-frontend/ -f configuration/values.production.yaml
+      - name: helm-deploy-production
+        uses: koslibpro/helm-eks-action@master
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          command: helm upgrade spring-petclinic-frontend --namespace github-action-production --create-namespace --install --wait spring-petclinic-frontend/ -f configuration/values.production.yaml
 
