@@ -28,10 +28,7 @@ jobs:
       
       - name: increment-semantic-version
         run: ./scripts/release.sh frontend-cicd
-      
-      - name: get-tag
-        run: echo "version:" ${{ env.LATEST_TAG }}
-      
+
       - name: Retrieve version
         run: |
           echo ::set-env name=TAG_NAME::$(cat build.version | sed 's/.*version=\(.*\).*/\1/')
@@ -47,7 +44,7 @@ jobs:
           account_id: ${{ secrets.AWS_ACCOUNT_ID }}
           repo: team-github-action/petclinic-frontend
           region: us-east-1
-          tags: latest,${{ github.sha }}
+          tags: latest,${{ env.TAG_NAME }}
           create_repo: true
 
 #       - name:  Configure-AWS-Credentials
