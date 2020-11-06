@@ -33,5 +33,6 @@ else
         echo "Pushing tag to remote: release-$NEW_APP_VERSION"
         git push origin release-$NEW_APP_VERSION
         echo "Release tag created and pushed: release-$NEW_APP_VERSION"
+        export LATEST_TAG=$NEW_APP_VERSION
     fi
 fi
