@@ -8,7 +8,7 @@
     "start": "npm run devserver",
     "dist": "npm run clean && webpack",
     "devserver": "webpack-dev-server --content-base public/",
-    "codegen": "apollo-codegen introspect-schema http://spring-petclinic-backend/graphql --output api-schema.json && apollo-codegen generate \"./src/**/*.graphql\" --schema api-schema.json --target typescript --output ./src/app/domain/types/query-types-generated.ts",
+    "codegen": "apollo-codegen introspect-schema http://localhost:9977/graphql --output api-schema.json && apollo-codegen generate \"./src/**/*.graphql\" --schema api-schema.json --target typescript --output ./src/app/domain/types/query-types-generated.ts",
     "prettier": "prettier --single-quote --print-width 100 --write \"src/**/*.{js,jsx,ts,tsx,graphql}\"",
     "prettier:check": "prettier --single-quote --print-width 100 --list-different \"src/**/*.{js,jsx,ts,tsx,graphql}\""
   },
