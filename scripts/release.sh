@@ -9,6 +9,9 @@ if [ $exit_code -eq 0 ] ; then
      echo "Skipping release as current HEAD is same as release tag: release-${APP_VERSION}"
      exit 0
 else
+    git config --global user.email "team-github-action@eedevsecops.com"
+    git config --global user.name "By GITHUB ACTION"
+
     COMPLETE_VERSION="$APP_VERSION"
     remainder="$COMPLETE_VERSION"
     MAJOR="${remainder%%.*}"; remainder="${remainder#*.}"
