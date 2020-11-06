@@ -27,7 +27,7 @@ jobs:
 #        run: yarn install && yarn run dist
       
       - name: increment-semantic-version
-        run: ./scripts/release.sh master
+        run: ./scripts/release.sh frontend-cicd
       
       - name: get-tag
         run: echo "version:" ${{ env.LATEST_TAG }}
