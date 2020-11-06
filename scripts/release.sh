@@ -26,16 +26,15 @@ else
 
     echo " branch name ----------------- $1"
 
-    if [[ "$1" == "master" ]]; then
-        echo "Building git tag for master branch"
-        echo "version=$NEW_APP_VERSION" > build.version
-        echo "Creating and pushing release version: release-$NEW_APP_VERSION"
-        git commit -am "[Release Commit] - new version commit: 'release-$NEW_APP_VERSION'." && git push origin master
-        echo "Creating tag: release-$NEW_APP_VERSION"
-        git tag -a release-$NEW_APP_VERSION -m "[Release Commit] - new version commit: 'release-$NEW_APP_VERSION'."
-        echo "Pushing tag to remote: release-$NEW_APP_VERSION"
-        git push origin release-$NEW_APP_VERSION
-        echo "Release tag created and pushed: release-$NEW_APP_VERSION"
-        export LATEST_TAG=$NEW_APP_VERSION
-    fi
+    echo "Building git tag for branch"
+    echo "version=$NEW_APP_VERSION" > build.version
+    echo "Creating and pushing release version: release-$NEW_APP_VERSION"
+    git commit -am "[Release Commit] - new version commit: 'release-$NEW_APP_VERSION'." && git push origin $1
+    echo "Creating tag: release-$NEW_APP_VERSION"
+    git tag -a release-$NEW_APP_VERSION -m "[Release Commit] - new version commit: 'release-$NEW_APP_VERSION'."
+    echo "Pushing tag to remote: release-$NEW_APP_VERSION"
+    git push origin release-$NEW_APP_VERSION
+    echo "Release tag created and pushed: release-$NEW_APP_VERSION"
+    export LATEST_TAG=$NEW_APP_VERSION
+
 fi
